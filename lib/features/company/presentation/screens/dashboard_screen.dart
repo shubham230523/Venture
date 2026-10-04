@@ -3,19 +3,24 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/glass_card.dart';
 import '../../../../shared/widgets/responsive_layout.dart';
+import '../../../ai/domain/entities/character_entity.dart';
+import '../../../ai/domain/services/ai_service.dart';
+import '../../../ai/presentation/screens/conversation_screen.dart';
 import '../../../finance/domain/services/financial_engine.dart';
 import '../../../game/domain/entities/game_state.dart';
+import '../../../game/presentation/screens/board_room_screen.dart';
+import '../../../investors/presentation/screens/fundraising_screen.dart';
+import '../../../marketing/presentation/screens/marketing_screen.dart';
+import '../../../product/presentation/screens/product_screen.dart';
 import '../widgets/financial_chart_card.dart';
 import '../widgets/metric_card.dart';
 
 class DashboardScreen extends StatefulWidget {
   final GameState initialState;
-  final VoidCallback? onOpenExecutiveChat;
 
   const DashboardScreen({
     super.key,
     required this.initialState,
-    this.onOpenExecutiveChat,
   });
 
   @override
@@ -25,6 +30,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late GameState _state;
   final FinancialEngine _financialEngine = FinancialEngine();
+  final LocalFallbackAiAdapter _aiService = LocalFallbackAiAdapter();
 
   final List<double> _revenueHistory = [0, 2000, 5000, 12000, 25000];
   final List<double> _expenseHistory = [8000, 9000, 10000, 12000, 15000];
@@ -46,6 +52,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _revenueHistory.add(_state.monthlyRevenue);
       _expenseHistory.add(_state.monthlyExpenses);
     });
+  }
+
+  void _navigateToScreen(Widget screen) {
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => screen),
+    );
   }
 
   @override
@@ -80,6 +92,70 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
         ],
+      ),
+      drawer: Drawer(
+        backgroundColor: AppColors.surface,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: const BoxDecoration(color: AppColors.background),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('VENTURE NAVIGATION',
+                      style: AppTypography.bodySmall.copyWith(color: AppColors.primary)),
+                  const SizedBox(height: 8),
+                  Text(_state.companyName, style: AppTypography.headlineMedium),
+                ],
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.dashboard, color: AppColors.primary),
+              title: const Text('Company Dashboard'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.build, color: AppColors.primary),
+              title: const Text('Product Management'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToScreen(const ProductScreen());
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.campaign, color: AppColors.primary),
+              title: const Text('Marketing & Growth'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToScreen(MarketingScreen(
+                  initialState: _state,
+                  onCampaignLaunched: (s) => setState(() => _state = s),
+                ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.monetization_on, color: AppColors.primary),
+              title: const Text('Series A Fundraising'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToScreen(FundraisingScreen(
+                  initialState: _state,
+                  onDealClosed: (s) => setState(() => _state = s),
+                ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.groups, color: AppColors.primary),
+              title: const Text('Q3 Board Meeting'),
+              onTap: () {
+                Navigator.pop(context);
+                _navigateToScreen(const BoardRoomScreen());
+              },
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -219,7 +295,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             subtitle: const Text('Focus: Tech Debt & Architecture'),
             trailing: IconButton(
               icon: const Icon(Icons.chat_bubble_outline),
-              onPressed: widget.onOpenExecutiveChat,
+              onPressed: () {
+                _navigateToScreen(ConversationScreen(
+                  character: const CharacterEntity(
+                    id: 'cto_elena',
+                    name: 'Dr. Elena Rostova',
+                    role: CharacterRole.cto,
+                    personality: 'Analytical & Tech-focused',
+                  ),
+                  aiService: _aiService,
+                ));
+              },
             ),
           ),
           const Divider(color: AppColors.cardBorder),
@@ -232,7 +318,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
             subtitle: const Text('Focus: Runway & Capital Efficiency'),
             trailing: IconButton(
               icon: const Icon(Icons.chat_bubble_outline),
-              onPressed: widget.onOpenExecutiveChat,
+              onPressed: () {
+                _navigateToScreen(ConversationScreen(
+                  character: const CharacterEntity(
+                    id: 'cfo_sarah',
+                    name: 'Sarah Chen',
+                    role: CharacterRole.cfo,
+                    personality: 'Fiscally conservative',
+                  ),
+                  aiService: _aiService,
+                ));
+              },
             ),
           ),
         ],
