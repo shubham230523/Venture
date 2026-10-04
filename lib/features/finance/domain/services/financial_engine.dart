@@ -1,4 +1,4 @@
-import '../../game/domain/entities/game_state.dart';
+import '../../../game/domain/entities/game_state.dart';
 
 class FinancialEngine {
   /// Calculates monthly burn rate (Expenses - Revenue).

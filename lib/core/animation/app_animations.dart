@@ -174,7 +174,7 @@ class _PulseGlowState extends State<PulseGlow>
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: widget.glowColor.withOpacity(0.4),
+                color: widget.glowColor.withValues(alpha: 0.4),
                 blurRadius: _glowAnimation.value,
                 spreadRadius: _glowAnimation.value / 3,
               ),

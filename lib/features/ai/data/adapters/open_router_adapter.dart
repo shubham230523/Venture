@@ -40,9 +40,9 @@ class OpenRouterAdapter implements AiService {
       if (content is String && content.isNotEmpty) {
         return content;
       }
-      return fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
+      return await fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
     } catch (_) {
-      return fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
+      return await fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
     }
   }
 
@@ -60,7 +60,7 @@ class OpenRouterAdapter implements AiService {
     final parsed = validator.validateAndParseJson(rawResponse, requiredKeys: requiredKeys);
     if (parsed != null) return parsed;
 
-    return fallbackAdapter.generateStructuredOutput(
+    return await fallbackAdapter.generateStructuredOutput(
       prompt: prompt,
       requiredKeys: requiredKeys,
       systemPrompt: systemPrompt,

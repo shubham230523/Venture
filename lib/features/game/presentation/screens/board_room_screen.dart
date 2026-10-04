@@ -72,17 +72,14 @@ class _BoardRoomScreenState extends State<BoardRoomScreen> {
                   children: [
                     Text('FOUNDER DECISION', style: AppTypography.titleMedium),
                     const SizedBox(height: 12),
-                    RadioListTile<String>(
-                      title: const Text('Approve CTO Tech Debt Investment (\$50k)'),
-                      value: 'cto_plan',
-                      groupValue: _selectedVote,
-                      onChanged: (val) => setState(() => _selectedVote = val),
+                    _buildOptionTile(
+                      keyId: 'cto_plan',
+                      title: 'Approve CTO Tech Debt Investment (\$50k)',
                     ),
-                    RadioListTile<String>(
-                      title: const Text('Side with CFO: Enforce Capital Discipline'),
-                      value: 'cfo_plan',
-                      groupValue: _selectedVote,
-                      onChanged: (val) => setState(() => _selectedVote = val),
+                    const SizedBox(height: 8),
+                    _buildOptionTile(
+                      keyId: 'cfo_plan',
+                      title: 'Side with CFO: Enforce Capital Discipline',
                     ),
                   ],
                 ),
@@ -110,6 +107,35 @@ class _BoardRoomScreenState extends State<BoardRoomScreen> {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildOptionTile({required String keyId, required String title}) {
+    final bool isSelected = _selectedVote == keyId;
+    return InkWell(
+      onTap: () => setState(() => _selectedVote = keyId),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primaryGlow : AppColors.surface,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected ? AppColors.primary : AppColors.cardBorder,
+          ),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              isSelected ? Icons.check_circle : Icons.radio_button_unchecked,
+              color: isSelected ? AppColors.primary : AppColors.textSecondary,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(title, style: AppTypography.bodyLarge),
+            ),
+          ],
         ),
       ),
     );

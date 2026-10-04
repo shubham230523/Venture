@@ -7,7 +7,7 @@ import 'package:venture/features/game/domain/entities/game_state.dart';
 void main() {
   group('Audio & Visual Evolution Tests', () {
     test('AudioService handles volume setting and mute toggles', () {
-      final audioService = AudioService();
+      final audioService = AudioService(player: null);
       expect(audioService.isMuted, isFalse);
 
       audioService.toggleMute();
@@ -21,6 +21,7 @@ void main() {
     testWidgets('CompanyEvolutionWidget renders startup stage badges', (tester) async {
       const state = GameState(
         monthlyRevenue: 100000.0, // $1.2M ARR * 10x = $12M Valuation
+        industryMultiple: 10.0,
         employeeCount: 10,
       );
 

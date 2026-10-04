@@ -35,13 +35,13 @@ abstract class AppTypography {
         color: AppColors.textSecondary,
       );
 
-  static TextStyle get monoNumber => GoogleFonts.jetbrainsMono(
+  static TextStyle get monoNumber => GoogleFonts.robotoMono(
         fontSize: 18,
         fontWeight: FontWeight.bold,
         color: AppColors.primary,
       );
 
-  static TextStyle get monoNumberSmall => GoogleFonts.jetbrainsMono(
+  static TextStyle get monoNumberSmall => GoogleFonts.robotoMono(
         fontSize: 14,
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,

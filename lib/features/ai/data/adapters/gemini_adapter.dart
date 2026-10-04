@@ -45,9 +45,9 @@ class GeminiAdapter implements AiService {
         final text = candidates[0]?['content']?['parts']?[0]?['text'];
         if (text is String && text.isNotEmpty) return text;
       }
-      return fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
+      return await fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
     } catch (_) {
-      return fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
+      return await fallbackAdapter.generateText(prompt: prompt, systemPrompt: systemPrompt);
     }
   }
 
@@ -65,7 +65,7 @@ class GeminiAdapter implements AiService {
     final parsed = validator.validateAndParseJson(rawText, requiredKeys: requiredKeys);
     if (parsed != null) return parsed;
 
-    return fallbackAdapter.generateStructuredOutput(
+    return await fallbackAdapter.generateStructuredOutput(
       prompt: prompt,
       requiredKeys: requiredKeys,
       systemPrompt: systemPrompt,

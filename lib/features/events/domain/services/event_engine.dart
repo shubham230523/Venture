@@ -1,4 +1,4 @@
-import '../../game/domain/entities/game_state.dart';
+import '../../../game/domain/entities/game_state.dart';
 
 class EventChoice {
   final String text;

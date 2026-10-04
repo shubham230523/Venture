@@ -18,7 +18,6 @@ class StartupCreationScreen extends StatefulWidget {
 }
 
 class _StartupCreationScreenState extends State<StartupCreationScreen> {
-  int _currentStep = 0;
   final _companyNameController = TextEditingController(text: 'Aetherium AI');
   final _taglineController =
       TextEditingController(text: 'Autonomous enterprise workflows');

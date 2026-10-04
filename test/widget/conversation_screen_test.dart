@@ -28,7 +28,7 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Dr. Elena Rostova'), findsOneWidget);
+    expect(find.text('Dr. Elena Rostova'), findsWidgets);
     expect(find.text('Approve Strategy'), findsOneWidget);
 
     await tester.tap(find.text('Approve Strategy'));

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../shared/widgets/glass_card.dart';
-import '../domain/entities/character_entity.dart';
-import '../domain/services/ai_service.dart';
+import '../../domain/entities/character_entity.dart';
+import '../../domain/services/ai_service.dart';
 
 class ConversationScreen extends StatefulWidget {
   final CharacterEntity character;

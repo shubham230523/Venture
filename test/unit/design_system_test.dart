@@ -50,11 +50,18 @@ void main() {
     });
 
     testWidgets('ResponsiveLayout adapts across mobile, tablet, desktop viewports', (tester) async {
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      // Mobile
+      tester.view.physicalSize = const Size(400, 800);
       await tester.pumpWidget(
         const MaterialApp(
-          home: MediaQuery(
-            data: MediaQueryData(size: Size(400, 800)),
-            child: ResponsiveLayout(
+          home: Scaffold(
+            body: ResponsiveLayout(
               mobile: Text('Mobile View'),
               tablet: Text('Tablet View'),
               desktop: Text('Desktop View'),
@@ -64,11 +71,12 @@ void main() {
       );
       expect(find.text('Mobile View'), findsOneWidget);
 
+      // Tablet
+      tester.view.physicalSize = const Size(800, 800);
       await tester.pumpWidget(
         const MaterialApp(
-          home: MediaQuery(
-            data: MediaQueryData(size: Size(800, 800)),
-            child: ResponsiveLayout(
+          home: Scaffold(
+            body: ResponsiveLayout(
               mobile: Text('Mobile View'),
               tablet: Text('Tablet View'),
               desktop: Text('Desktop View'),
@@ -78,11 +86,12 @@ void main() {
       );
       expect(find.text('Tablet View'), findsOneWidget);
 
+      // Desktop
+      tester.view.physicalSize = const Size(1400, 900);
       await tester.pumpWidget(
         const MaterialApp(
-          home: MediaQuery(
-            data: MediaQueryData(size: Size(1200, 800)),
-            child: ResponsiveLayout(
+          home: Scaffold(
+            body: ResponsiveLayout(
               mobile: Text('Mobile View'),
               tablet: Text('Tablet View'),
               desktop: Text('Desktop View'),

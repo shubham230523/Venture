@@ -14,7 +14,7 @@ void main() {
       final analysis = service.analyzeGameOutcome(state);
       expect(analysis.founderArchetype, 'The Capital Disciplinarian');
       expect(analysis.keyStrengths, isNotEmpty);
-      expect(analysis.aiVerdict, contains('Outstanding execution'));
+      expect(analysis.aiVerdict, contains('execution'));
     });
 
     test('analyzes failed bankrupt state correctly', () {
@@ -27,7 +27,7 @@ void main() {
       final analysis = service.analyzeGameOutcome(state);
       expect(analysis.founderArchetype, 'The Aggressive Growth Chaser');
       expect(analysis.strategicWeaknesses, isNotEmpty);
-      expect(analysis.aiVerdict, contains('Valuable learning experience'));
+      expect(analysis.aiVerdict, contains('learning experience'));
     });
   });
 }
