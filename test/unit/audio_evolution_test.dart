@@ -7,7 +7,7 @@ import 'package:venture/features/game/domain/entities/game_state.dart';
 void main() {
   group('Audio & Visual Evolution Tests', () {
     test('AudioService handles volume setting and mute toggles', () {
-      final audioService = AudioService(player: null);
+      final audioService = AudioService();
       expect(audioService.isMuted, isFalse);
 
       audioService.toggleMute();
