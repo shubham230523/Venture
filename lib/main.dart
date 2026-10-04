@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'core/di/injection.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initDependencies();
+  runApp(const VentureApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class VentureApp extends StatelessWidget {
+  const VentureApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Hello World!'))),
+    return MaterialApp(
+      title: 'Venture',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(useMaterial3: true),
+      home: const Scaffold(
+        body: Center(
+          child: Text(
+            'VENTURE — AI Business Simulation Game',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
     );
   }
 }
